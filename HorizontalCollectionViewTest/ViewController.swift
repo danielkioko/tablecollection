@@ -17,12 +17,10 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        collectionViewLayout.minimumLineSpacing = 0
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-//        configureCollectionViewLayoutItemSize()
     }
     
 //    private func configureCollectionViewLayoutItemSize() {

@@ -11,7 +11,6 @@ class BetterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     //MARK: - Outlets
     @IBOutlet weak var tableview: UITableView!
-    @IBOutlet weak var subView: UIView!
     @IBOutlet weak var collectionViewLayout: UICollectionViewFlowLayout!
     
     override func viewDidLoad() {
@@ -23,10 +22,10 @@ class BetterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     private var collectionViewImages: [String] = ["avengersposter", "hungergamesposter", "LOTRposter"]
     private var indexOfCellBeforeDragging = 0
-    let tutorials: [Tutorials] = [Tutorials(title: " Training Request", status: "Finished", color: .cyan),
-                                  Tutorials(title: " Adding a post", status: "Continue", color: .magenta),
-                                  Tutorials(title: " Using S61C - Messenger", status: "Start", color: .darkGray),
-                                  Tutorials(title: " Training Progress", status: "Start", color: .darkGray)]
+    let tutorials: [Tutorials] = [Tutorials(title: "  Training Request", status: "Finished", color: .cyan),
+                                  Tutorials(title: "  Adding a post", status: "Continue", color: .magenta),
+                                  Tutorials(title: "  Using S61C - Messenger", status: "Start", color: .darkGray),
+                                  Tutorials(title: "  Training Progress", status: "Start", color: .darkGray)]
 
     
     //MARK: - TableView DataSource Functions
@@ -37,15 +36,40 @@ class BetterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableview.dequeueReusableCell(withIdentifier: "TutorialTVC", for: indexPath) as? TutorialTableViewCell else {return UITableViewCell()}
         
-        cell.colorView.backgroundColor = tutorials[indexPath.row].color
+        cell.cellView.backgroundColor = tutorials[indexPath.row].color
         cell.tutorialNameLabel.text = tutorials[indexPath.row].title
-        cell.tutorialStatusButton.titleLabel?.text = tutorials[indexPath.row].status
+        cell.tutorialStatusButton.setTitle(tutorials[indexPath.row].status, for: .normal)
         
         return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 125
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let headerView = UIView.init(frame: CGRect.init(x: 0, y: 0, width: tableView.frame.width, height: 50))
+                
+        let label = UILabel()
+        label.frame = CGRect.init(x: 20, y: 5, width: headerView.frame.width-10, height: headerView.frame.height-10)
+        label.text = "Discover More"
+        label.font = .systemFont(ofSize: 30)
+        label.textColor = .black
+                
+        headerView.addSubview(label)
+                
+        return headerView
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 50
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        cell.contentView.layer.masksToBounds = true
+        //Prevents lagging while scrolling
+        let radius = cell.contentView.layer.cornerRadius
+        cell.layer.shadowPath = UIBezierPath(roundedRect: cell.bounds, cornerRadius: radius).cgPath
     }
    
     
