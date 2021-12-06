@@ -12,12 +12,15 @@ class BetterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     //MARK: - Outlets
     @IBOutlet weak var tableview: UITableView!
     @IBOutlet weak var collectionViewLayout: UICollectionViewFlowLayout!
+    @IBOutlet weak var collectionView: UICollectionView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         tableview.delegate = self
         tableview.dataSource = self
         tableview.register(UINib(nibName: "TutorialTableViewCell", bundle: nil), forCellReuseIdentifier: "TutorialTVC")
+        collectionView.delegate = self
+        collectionView.dataSource = self
     }
     
     override func viewDidLayoutSubviews() {
@@ -85,7 +88,7 @@ class BetterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "tutCell", for: indexPath) as? TutorialCollectionViewCell else {return UICollectionViewCell()}
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "tutorialCell", for: indexPath) as? TutorialCollectionViewCell else {return UICollectionViewCell()}
         
         cell.image.image = UIImage(named: collectionViewImages[indexPath.row])
         cell.image.layer.cornerRadius = 50
