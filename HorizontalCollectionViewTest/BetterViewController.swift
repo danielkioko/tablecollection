@@ -19,8 +19,8 @@ class BetterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         tableview.delegate = self
         tableview.dataSource = self
         tableview.register(UINib(nibName: "TutorialTableViewCell", bundle: nil), forCellReuseIdentifier: "TutorialTVC")
-        collectionView.delegate = self
-        collectionView.dataSource = self
+//        collectionView.delegate = self
+//        collectionView.dataSource = self
     }
     
     override func viewDidLayoutSubviews() {
