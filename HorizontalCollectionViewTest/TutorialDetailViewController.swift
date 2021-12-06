@@ -1,32 +1,41 @@
 //
-//  ViewController.swift
+//  TutorialDetailViewController.swift
 //  HorizontalCollectionViewTest
 //
-//  Created by Ethan Scott on 11/30/21.
+//  Created by Ethan Scott on 12/5/21.
 //
 
 import UIKit
 
-class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UITableViewDelegate, UITableViewDataSource {
+class TutorialDetailViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     
-    @IBOutlet private weak var collectionViewLayout: UICollectionViewFlowLayout!
-    @IBOutlet private weak var tableView: UITableView!
+    //MARK: - Outlets
+    @IBOutlet weak var tutorialTitleLabel: UILabel!
+    @IBOutlet weak var collectionViewLayout: UICollectionViewFlowLayout!
+    @IBOutlet weak var notesHeaderLabel: UILabel!
+    @IBOutlet weak var notesTextView: UITextView!
+    @IBOutlet weak var backButton: UIButton!
+    @IBOutlet weak var notesView: UIView!
     
+
     private var collectionViewImages: [String] = ["avengersposter", "hungergamesposter", "LOTRposter"]
     private var indexOfCellBeforeDragging = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        notesView.layer.masksToBounds = false
+        notesView.layer.shadowOpacity = 0.35
+        notesView.layer.shadowRadius = 2
+        notesView.layer.shadowOffset = CGSize(width: 0, height: 2)
+        notesView.layer.shadowColor = UIColor.black.cgColor
+        notesView.backgroundColor = .white
+        notesView.layer.cornerRadius = 12
+//        notesView.applyShadowWithCornerRadius(color: .gray, opacity: 0.35, radius: 0.5, edge: AIEdge.Bottom_Right, shadowSpace: 2.0, cornerRadius: 12)
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        configureCollectionViewLayoutItemSize()
-    }
-    
-    private func configureCollectionViewLayoutItemSize() {
-        let inset: CGFloat = 15
-        collectionViewLayout.sectionInset = UIEdgeInsets(top: 0, left: inset, bottom: 0, right: inset)
+        configureCollectionViewInsets()
     }
 
     //MARK: - CollectionView DATA SOURCE FUNCTIONS
@@ -45,7 +54,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         indexOfCellBeforeDragging = indexOfMajorCell()
-        
     }
     
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
@@ -74,17 +82,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         }
     }
     
-    //MARK: - TableView DataSource Functions
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 0
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return UITableViewCell()
-    }
-    
-    
-    
     
     private func indexOfMajorCell() -> Int {
         let itemWidth = collectionViewLayout.itemSize.width
@@ -95,7 +92,19 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         return safeIndex
     }
     
+    private func configureCollectionViewInsets() {
+        let inset: CGFloat = 15
+        collectionViewLayout.sectionInset = UIEdgeInsets(top: 0, left: inset, bottom: 0, right: inset)
+    }
+    
+    /*
+    // MARK: - Navigation
 
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Get the new view controller using segue.destination.
+        // Pass the selected object to the new view controller.
+    }
+    */
 
 }
-

@@ -20,6 +20,11 @@ class BetterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         tableview.register(UINib(nibName: "TutorialTableViewCell", bundle: nil), forCellReuseIdentifier: "TutorialTVC")
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        configureCollectionViewInsets()
+    }
+    
     private var collectionViewImages: [String] = ["avengersposter", "hungergamesposter", "LOTRposter"]
     private var indexOfCellBeforeDragging = 0
     let tutorials: [Tutorials] = [Tutorials(title: "  Training Request", status: "Finished", color: .cyan),
@@ -121,13 +126,18 @@ class BetterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     
     //MARK: - Helper Functions
-    private func indexOfMajorCell() -> Int {
+    func indexOfMajorCell() -> Int {
         let itemWidth = collectionViewLayout.itemSize.width
         let proportionalOffset = collectionViewLayout.collectionView!.contentOffset.x / itemWidth
         let index = Int(round(proportionalOffset))
         let safeIndex = max(0, min(collectionViewImages.count - 1, index))
         
         return safeIndex
+    }
+    
+    func configureCollectionViewInsets() {
+        let inset: CGFloat = 15
+        collectionViewLayout.sectionInset = UIEdgeInsets(top: 0, left: inset, bottom: 0, right: inset)
     }
 
 }//End of class
