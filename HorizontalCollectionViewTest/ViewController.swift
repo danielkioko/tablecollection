@@ -9,7 +9,7 @@ import UIKit
 
 class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UITableViewDelegate, UITableViewDataSource {
     
-    @IBOutlet private weak var collectionView: UICollectionView!
+    @IBOutlet private weak var collectionViewLayout: UICollectionViewFlowLayout!
     @IBOutlet private weak var tableView: UITableView!
     
     private var collectionViewImages: [String] = ["avengersposter", "hungergamesposter", "LOTRposter"]
@@ -17,20 +17,17 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        collectionViewLayout.minimumLineSpacing = 0
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-//        configureCollectionViewLayoutItemSize()
+        configureCollectionViewLayoutItemSize()
     }
     
-//    private func configureCollectionViewLayoutItemSize() {
-//        let inset: CGFloat = 25 // This inset calculation is some magic so the next and the previous cells will peek from the sides. Don't worry about it
-//        collectionViewLayout.sectionInset = UIEdgeInsets(top: 0, left: inset, bottom: 0, right: inset)
-//
-//        collectionViewLayout.itemSize = CGSize(width: collectionViewLayout.collectionView!.frame.size.width - inset * 2, height: collectionViewLayout.collectionView!.frame.size.height)
-//    }
+    private func configureCollectionViewLayoutItemSize() {
+        let inset: CGFloat = 15
+        collectionViewLayout.sectionInset = UIEdgeInsets(top: 0, left: inset, bottom: 0, right: inset)
+    }
 
     //MARK: - CollectionView DATA SOURCE FUNCTIONS
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
