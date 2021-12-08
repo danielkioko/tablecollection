@@ -47,8 +47,6 @@ class BetterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 50
     }
-   
-    
     
     //MARK: - CollectionView DataSource Functions
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -56,7 +54,7 @@ class BetterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "tutCell", for: indexPath) as? TutorialCollectionViewCell else {return UICollectionViewCell()}
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TutorialCollectionViewCell", for: indexPath) as? TutorialCollectionViewCell else {return UICollectionViewCell()}
         
         cell.image.image = UIImage(named: collectionViewImages[indexPath.row])
         cell.image.layer.cornerRadius = 50
@@ -64,37 +62,35 @@ class BetterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         return cell
     }
     
-    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        indexOfCellBeforeDragging = indexOfMajorCell()
-    }
-    
-    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-        targetContentOffset.pointee = scrollView.contentOffset
-        let indexOfMajorCell = self.indexOfMajorCell()
-        
-        let swipeVelocityThreshold: CGFloat = 5.0
-        let hasEnoughVelocityToSlideToTheNextCell = indexOfCellBeforeDragging + 1 < collectionViewImages.count && velocity.x > swipeVelocityThreshold
-        let hasEnoughVelocityToSlideToThePreviousCell = indexOfCellBeforeDragging - 1 >= 0 && velocity.x < -swipeVelocityThreshold
-        
-        let majorCellIsTheCellBeforeDragging = indexOfMajorCell == indexOfCellBeforeDragging
-        
-        let didUseSwipeToSkipCell = majorCellIsTheCellBeforeDragging && (hasEnoughVelocityToSlideToTheNextCell || hasEnoughVelocityToSlideToThePreviousCell)
-        
-        if didUseSwipeToSkipCell {
-            let snapToIndex = indexOfCellBeforeDragging + (hasEnoughVelocityToSlideToTheNextCell ? 1 : -1)
-            let toValue = collectionViewLayout.itemSize.width * CGFloat(snapToIndex)
-            // Damping equal 1 => no oscillations => decay animation:
-            UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: velocity.x, options: .allowUserInteraction, animations: {
-            scrollView.contentOffset = CGPoint(x: toValue, y: 0)
-            scrollView.layoutIfNeeded()
-            }, completion: nil)
-        } else {
-        let indexPath = IndexPath(row: indexOfMajorCell, section: 0)
-        collectionViewLayout.collectionView!.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
-        }
-    }
-    
-    
+//    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+//        indexOfCellBeforeDragging = indexOfMajorCell()
+//    }
+//    
+//    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+//        targetContentOffset.pointee = scrollView.contentOffset
+//        let indexOfMajorCell = self.indexOfMajorCell()
+//        
+//        let swipeVelocityThreshold: CGFloat = 5.0
+//        let hasEnoughVelocityToSlideToTheNextCell = indexOfCellBeforeDragging + 1 < collectionViewImages.count && velocity.x > swipeVelocityThreshold
+//        let hasEnoughVelocityToSlideToThePreviousCell = indexOfCellBeforeDragging - 1 >= 0 && velocity.x < -swipeVelocityThreshold
+//        
+//        let majorCellIsTheCellBeforeDragging = indexOfMajorCell == indexOfCellBeforeDragging
+//        
+//        let didUseSwipeToSkipCell = majorCellIsTheCellBeforeDragging && (hasEnoughVelocityToSlideToTheNextCell || hasEnoughVelocityToSlideToThePreviousCell)
+//        
+//        if didUseSwipeToSkipCell {
+//            let snapToIndex = indexOfCellBeforeDragging + (hasEnoughVelocityToSlideToTheNextCell ? 1 : -1)
+//            let toValue = collectionViewLayout.itemSize.width * CGFloat(snapToIndex)
+//            // Damping equal 1 => no oscillations => decay animation:
+//            UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: velocity.x, options: .allowUserInteraction, animations: {
+//            scrollView.contentOffset = CGPoint(x: toValue, y: 0)
+//            scrollView.layoutIfNeeded()
+//            }, completion: nil)
+//        } else {
+//        let indexPath = IndexPath(row: indexOfMajorCell, section: 0)
+//        collectionViewLayout.collectionView!.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+//        }
+//    }
     
     //MARK: - Helper Functions
     private func indexOfMajorCell() -> Int {
